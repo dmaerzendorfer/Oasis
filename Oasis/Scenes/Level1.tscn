@@ -1,0 +1,203 @@
+[gd_scene load_steps=16 format=3 uid="uid://ckkwik1m4nfhr"]
+
+[ext_resource type="PackedScene" uid="uid://dq11byuc7cqex" path="res://Scenes/background.tscn" id="1_3l6eb"]
+[ext_resource type="Script" path="res://Scripts/Level1.gd" id="1_oxko7"]
+[ext_resource type="PackedScene" uid="uid://bngy7vwhuxnu8" path="res://Scenes/goal.tscn" id="2_nqy08"]
+[ext_resource type="Script" path="res://Scripts/River.gd" id="3_kwpu4"]
+[ext_resource type="Texture2D" uid="uid://brynfiubdt642" path="res://Sprites/BlueButton.png" id="3_myfdm"]
+[ext_resource type="Script" path="res://Scripts/CollisionCheckerRay2D.gd" id="4_b1uck"]
+[ext_resource type="FontFile" uid="uid://cq1oj4hx2215e" path="res://Fonts/YoungSerif-60.tres" id="5_617es"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hnukw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eh5cx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kk0rp"]
+size = Vector2(167, 93)
+
+[sub_resource type="Gradient" id="Gradient_w48o4"]
+offsets = PackedFloat32Array(0, 0.542857, 0.994286)
+colors = PackedColorArray(1, 0, 0, 1, 0.63662, 0.00906603, 0.0309224, 1, 0.631373, 0.00784314, 0.0313726, 0.388235)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_lxr1k"]
+gradient = SubResource("Gradient_w48o4")
+
+[sub_resource type="Curve" id="Curve_jdks0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_rbhb0"]
+curve = SubResource("Curve_jdks0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gqh3h"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 30.0
+gravity = Vector3(0, 500, 0)
+initial_velocity_min = 70.0
+initial_velocity_max = 100.0
+angular_velocity_min = 2.0
+angular_velocity_max = 100.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+angle_min = 30.0
+angle_max = 60.0
+scale_min = 20.0
+scale_max = 20.0
+scale_curve = SubResource("CurveTexture_rbhb0")
+color_ramp = SubResource("GradientTexture1D_lxr1k")
+hue_variation_max = 1.0
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_oxko7")
+
+[node name="Background" parent="." instance=ExtResource("1_3l6eb")]
+
+[node name="River" type="Node2D" parent="."]
+script = ExtResource("3_kwpu4")
+
+[node name="Line" type="Line2D" parent="River"]
+unique_name_in_owner = true
+points = PackedVector2Array(288, -50, 288, 0, 288, 1024)
+width = 20.0
+default_color = Color(0, 0.439216, 0.439216, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="CollisionCheckerRay2D" type="RayCast2D" parent="River"]
+position = Vector2(142, 95)
+target_position = Vector2(0, 70)
+hit_from_inside = true
+collide_with_areas = true
+script = ExtResource("4_b1uck")
+
+[node name="Goal" parent="." instance=ExtResource("2_nqy08")]
+unique_name_in_owner = true
+position = Vector2(481, 939)
+
+[node name="BackUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 575.0
+offset_bottom = 1020.0
+
+[node name="MarginContainer" type="MarginContainer" parent="BackUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -123.0
+offset_bottom = 93.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="Button" type="Button" parent="BackUI/MarginContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_617es")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hnukw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_eh5cx")
+text = "Back"
+
+[node name="Borders" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="Borders"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Borders/Area2D"]
+position = Vector2(-4, 22)
+polygon = PackedVector2Array(-73, -124, -61, 1117, 670, 1117, 622, -130, 916, -88, 976, 1309, -301, 1309, -307, -285)
+
+[node name="Obstacles" type="Node" parent="."]
+
+[node name="Obstacle" type="Sprite2D" parent="Obstacles"]
+position = Vector2(472, 812)
+texture = ExtResource("3_myfdm")
+
+[node name="Area2D" type="Area2D" parent="Obstacles/Obstacle"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/Obstacle/Area2D"]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_kk0rp")
+
+[node name="Obstacle2" type="Sprite2D" parent="Obstacles"]
+position = Vector2(103, 431)
+texture = ExtResource("3_myfdm")
+
+[node name="Area2D" type="Area2D" parent="Obstacles/Obstacle2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/Obstacle2/Area2D"]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_kk0rp")
+
+[node name="Obstacle3" type="Sprite2D" parent="Obstacles"]
+position = Vector2(288, 667)
+texture = ExtResource("3_myfdm")
+
+[node name="Area2D" type="Area2D" parent="Obstacles/Obstacle3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/Obstacle3/Area2D"]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_kk0rp")
+
+[node name="WinUi" type="Node2D" parent="."]
+unique_name_in_owner = true
+visible = false
+top_level = true
+
+[node name="CenterControl" type="CenterContainer" parent="WinUi"]
+offset_right = 576.0
+offset_bottom = 1024.0
+
+[node name="Control" type="Control" parent="WinUi/CenterControl"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="WinUi/CenterControl/Control"]
+layout_mode = 2
+offset_left = -140.0
+offset_top = -117.0
+offset_right = 148.0
+offset_bottom = 133.0
+color = Color(0.34902, 0.34902, 0.34902, 0.596078)
+
+[node name="CenterContainer" type="CenterContainer" parent="WinUi/CenterControl/Control"]
+layout_mode = 0
+offset_left = -58.0
+offset_top = -33.0
+offset_right = 62.0
+offset_bottom = 42.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WinUi/CenterControl/Control/CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="WinUi/CenterControl/Control/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_617es")
+theme_override_font_sizes/font_size = 25
+text = "You Won!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Back" type="Button" parent="WinUi/CenterControl/Control/CenterContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("5_617es")
+text = "Back to Menu"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="WinUi/CenterControl"]
+show_behind_parent = true
+position = Vector2(288, 512)
+scale = Vector2(2.82699, 5.13544)
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_gqh3h")
+lifetime = 3.0
+explosiveness = 0.75
+
+[connection signal="hit_by_river" from="River/CollisionCheckerRay2D" to="." method="_on_collision_checker_ray_2d_hit_by_river"]
+[connection signal="pressed" from="BackUI/MarginContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="WinUi/CenterControl/Control/CenterContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]

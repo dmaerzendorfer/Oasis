@@ -1,0 +1,121 @@
+[gd_scene load_steps=8 format=3 uid="uid://brf8bdkxa6r8k"]
+
+[ext_resource type="PackedScene" uid="uid://dq11byuc7cqex" path="res://Scenes/background.tscn" id="1_nagcv"]
+[ext_resource type="Script" path="res://Scripts/UI.gd" id="1_tb0rl"]
+[ext_resource type="FontFile" uid="uid://8pfbdgem6j37" path="res://Fonts/YoungSerif-Regular.ttf" id="1_vf2qp"]
+[ext_resource type="FontFile" uid="uid://cq1oj4hx2215e" path="res://Fonts/YoungSerif-60.tres" id="2_mv80y"]
+[ext_resource type="Script" path="res://Scenes/SettingsUI.gd" id="5_h538v"]
+[ext_resource type="Script" path="res://Scripts/SettingsMenu.gd" id="6_0xtjp"]
+
+[sub_resource type="GDScript" id="GDScript_cixu8"]
+script/source = "extends Node2D
+
+
+
+"
+
+[node name="Game" type="Node2D"]
+
+[node name="Background" parent="." instance=ExtResource("1_nagcv")]
+
+[node name="UI" type="Node2D" parent="."]
+script = ExtResource("1_tb0rl")
+
+[node name="Title" type="Label" parent="UI"]
+offset_top = 300.0
+offset_right = 576.0
+offset_bottom = 417.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_vf2qp")
+theme_override_font_sizes/font_size = 100
+text = "Oasis"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuButtons" type="Node2D" parent="UI"]
+script = SubResource("GDScript_cixu8")
+
+[node name="Start" type="Node2D" parent="UI/MenuButtons"]
+unique_name_in_owner = true
+
+[node name="StartMenu" type="VBoxContainer" parent="UI/MenuButtons/Start"]
+offset_top = 500.0
+offset_right = 576.0
+offset_bottom = 787.0
+
+[node name="StartButton" type="Button" parent="UI/MenuButtons/Start/StartMenu"]
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_mv80y")
+theme_override_font_sizes/font_size = 60
+text = "Start"
+flat = true
+
+[node name="Options" type="Button" parent="UI/MenuButtons/Start/StartMenu"]
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_mv80y")
+theme_override_font_sizes/font_size = 60
+text = "Options"
+flat = true
+
+[node name="QuitButton" type="Button" parent="UI/MenuButtons/Start/StartMenu"]
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_mv80y")
+theme_override_font_sizes/font_size = 60
+text = "Quit"
+flat = true
+
+[node name="Settings" type="Node2D" parent="UI/MenuButtons/Start"]
+unique_name_in_owner = true
+position = Vector2(576, 0)
+script = ExtResource("5_h538v")
+
+[node name="SettingsMenu" type="VBoxContainer" parent="UI/MenuButtons/Start/Settings"]
+offset_top = 500.0
+offset_right = 576.0
+offset_bottom = 787.0
+script = ExtResource("6_0xtjp")
+
+[node name="MuteMusic" type="CheckBox" parent="UI/MenuButtons/Start/Settings/SettingsMenu"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_mv80y")
+theme_override_font_sizes/font_size = 60
+text = " Mute Music"
+alignment = 1
+icon_alignment = 1
+expand_icon = true
+
+[node name="UseGyro" type="CheckBox" parent="UI/MenuButtons/Start/Settings/SettingsMenu"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_mv80y")
+theme_override_font_sizes/font_size = 60
+text = "Use Gyro"
+alignment = 1
+icon_alignment = 1
+expand_icon = true
+
+[node name="BackButton" type="Button" parent="UI/MenuButtons/Start/Settings/SettingsMenu"]
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_mv80y")
+theme_override_font_sizes/font_size = 60
+text = "Back"
+flat = true
+
+[connection signal="pressed" from="UI/MenuButtons/Start/StartMenu/StartButton" to="UI" method="_on_start_button_pressed"]
+[connection signal="pressed" from="UI/MenuButtons/Start/StartMenu/Options" to="UI" method="_on_options_pressed"]
+[connection signal="pressed" from="UI/MenuButtons/Start/StartMenu/QuitButton" to="UI" method="_on_quit_button_pressed"]
+[connection signal="visibility_changed" from="UI/MenuButtons/Start/Settings" to="UI/MenuButtons/Start/Settings" method="_on_visibility_changed"]
+[connection signal="toggled" from="UI/MenuButtons/Start/Settings/SettingsMenu/MuteMusic" to="UI/MenuButtons/Start/Settings" method="_on_mute_music_toggled"]
+[connection signal="toggled" from="UI/MenuButtons/Start/Settings/SettingsMenu/UseGyro" to="UI/MenuButtons/Start/Settings" method="_on_use_gyro_toggled"]
+[connection signal="pressed" from="UI/MenuButtons/Start/Settings/SettingsMenu/BackButton" to="UI" method="_on_back_button_pressed"]

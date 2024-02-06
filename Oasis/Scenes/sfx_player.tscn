@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://da3c7015dkniy"]
+
+[ext_resource type="Script" path="res://Scripts/SFXPlayer.gd" id="1_nr5ig"]
+[ext_resource type="AudioStream" uid="uid://cqns0cmopacpb" path="res://Sound/TeaWithGrandma.mp3" id="2_81aiw"]
+
+[node name="SFXPlayer" type="Node2D"]
+script = ExtResource("1_nr5ig")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_81aiw")
+autoplay = true

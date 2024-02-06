@@ -1,0 +1,10 @@
+[config]
+
+name = "AudioFocus"
+binary_type = "local"
+binary="app-debug.aar"
+
+[dependencies]
+local=[]
+remote=[]
+custom_mave_repos=[]

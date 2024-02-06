@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://ckkwik1m4nfhr"]
+
+[ext_resource type="PackedScene" uid="uid://dq11byuc7cqex" path="res://Scenes/background.tscn" id="1_3l6eb"]
+[ext_resource type="PackedScene" uid="uid://c1ndqh8h8h264" path="res://Scenes/goal.tscn" id="2_nqy08"]
+[ext_resource type="Script" path="res://Scripts/River.gd" id="3_kwpu4"]
+[ext_resource type="Texture2D" uid="uid://brynfiubdt642" path="res://Sprites/BlueButton.png" id="3_myfdm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kk0rp"]
+size = Vector2(167, 93)
+
+[node name="Level1" type="Node2D"]
+
+[node name="Background" parent="." instance=ExtResource("1_3l6eb")]
+
+[node name="Goal" parent="." instance=ExtResource("2_nqy08")]
+position = Vector2(506, 953)
+
+[node name="River" type="Node2D" parent="."]
+script = ExtResource("3_kwpu4")
+
+[node name="Line" type="Line2D" parent="River"]
+unique_name_in_owner = true
+points = PackedVector2Array(288, 0, 288, 1024)
+width = 20.0
+default_color = Color(0, 0.439216, 0.439216, 1)
+joint_mode = 2
+
+[node name="CollisionChecker" type="Node2D" parent="River"]
+
+[node name="Obstacle" type="Sprite2D" parent="."]
+position = Vector2(472, 812)
+texture = ExtResource("3_myfdm")
+
+[node name="Area2D" type="Area2D" parent="Obstacle"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle/Area2D"]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_kk0rp")
